@@ -73,6 +73,7 @@
 						<?php endif; ?>
 					</div><!-- .site-header-menu -->
 				<?php endif; ?>
+                <?php do_action('icl_language_selector'); ?>
 			</div><!-- .site-header-main -->
 
 			<?php if ( get_header_image() ) : ?>
