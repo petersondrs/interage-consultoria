@@ -2,11 +2,77 @@ body {
     font-family: 'Oxygen', sans-serif;
     padding: 0rem;
     margin: 0rem;
+    font-size: @font-size-base;
 }
 
 header.site-header {
     box-shadow: 1px 1px 2px #ddd;
-    height: 12rem;
+
+    .site-header-main {
+        margin: 0 auto;
+        max-width: 1140px;
+        height: 80px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+    }
+
+    a {
+        text-decoration: none;
+        color: @grey-700;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: @font-size-smaller;
+    }
+
+    .main-navigation {
+
+        ul {
+            min-width: 45rem;
+            display: flex;
+            justify-content: space-between;
+
+            li {
+                display: inline-block;
+                border-top: solid white 2px !important;
+
+
+                    a:hover {
+                        color: @brand-color;
+                    }
+
+                &.current-menu-item {
+                    border-top: solid @brand-color2 2px !important;
+                    a {
+                        color: @brand-color;
+                    }
+                }
+            }
+        }
+    }
+
+    .switcher-language {
+        .box {
+            color: white;
+            padding: .4rem;
+            font-weight: 400;
+        }
+
+        .pt {
+            background-color: @brand-color2;
+            margin-right: .5rem;
+        }
+        .en {
+            background-color: @brand-color;
+        }
+    }
+
+    .custom-logo {
+        max-width: 150px;
+        height: auto;
+    }
 
     .site-title,
     .site-description {
@@ -15,6 +81,7 @@ header.site-header {
 }
 
 footer {
+    display: none;
     .main-navigation {
         display: none;
     }
