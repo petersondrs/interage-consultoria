@@ -114,7 +114,7 @@ class Lingotek_Filters_Term extends PLL_Admin_Filters_Term {
 			$term_ids = array_map('intval', $_REQUEST['delete_tags']);
 
 		$term_ids[] = $term_id;
-		return array_diff($this->model->get_translations('term', $term_id), $term_ids);
+		return array_diff(PLL()->model->term->get_translations($term_id), $term_ids);
 	}
 
 	/*

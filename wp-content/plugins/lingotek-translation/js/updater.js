@@ -120,6 +120,7 @@ jQuery(document).ready(function($) {
             }
             else {
               $(td).find('.pll_icon_add').remove();
+              $(td).find('.pll_icon_tick').remove();
               $(td).find('.pll_icon_edit').remove();
               $(td).find('.lingotek-color').remove();
               var indicator = $('<div></div>').addClass('lingotek-color dashicons dashicons-no');

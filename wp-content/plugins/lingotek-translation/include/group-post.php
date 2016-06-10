@@ -324,7 +324,10 @@ class Lingotek_Group_Post extends Lingotek_Group {
 
 		// create new translation
 		else if ($this->translations[$locale] == 'ready' || $automatic) {
-			unset($post->post_name); // forces the creation of a new default slug if not translated by Lingotek
+			$content_type_options = get_option('lingotek_content_type');
+			if (!isset($content_type_options[$post->post_type]['fields']['post_name'])) {
+				unset($post->post_name); // forces the creation of a new default slug if not translated by Lingotek
+			}
 			$tr_post = array_merge((array) $post , $tr_post); // copy all untranslated fields from the original post
 			$tr_post['ID'] = null; // will force the creation of a new post
 
@@ -358,6 +361,10 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				// translate metas
 				if (isset($translation['metas'])) {
 					self::copy_translated_metas($translation['metas'], $tr_id);
+				}
+
+				if (class_exists('PLL_Share_Post_Slug', true) && isset($content_type_options[$post->post_type]['fields']['post_name'])) {
+					wp_update_post(array('ID' => $tr_id ,'post_name' => $post->post_name));
 				}
 			}
 		}

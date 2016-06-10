@@ -74,8 +74,6 @@
 					</div><!-- .site-header-menu -->
 				<?php endif; ?>
             <div class="switcher-language">
-            <a href="/pt/" hreflang="pt-BR" class="box pt">PT</a>
-            <a href="/en/" hreflang="en-US" class="box en">EN</a>
             </div>
 			</div><!-- .site-header-main -->
 

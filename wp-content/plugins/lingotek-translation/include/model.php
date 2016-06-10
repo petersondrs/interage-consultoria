@@ -218,6 +218,7 @@ class Lingotek_Model {
 		$cp_lang = $this->pllm->get_language($target);
 		$cp_post = (array) $post;
 		$cp_post['post_status'] = ($prefs['download_post_status'] === 'SAME_AS_SOURCE')? $post->post_status : $prefs['download_post_status']; // status
+		$slug = $cp_post['post_name'];
 		unset($cp_post['ID']);
 		unset($cp_post['post_name']);
 		if (!isset($document->desc_array[$target])) {
@@ -230,6 +231,9 @@ class Lingotek_Model {
 				Lingotek_Group_Post::copy_or_ignore_metas($post->ID, $new_post_id);
 				$document->desc_array[$target] = $new_post_id;
 				$document->save();
+				if (class_exists('PLL_Share_Post_Slug', true)) {
+					wp_update_post(array('ID' => $new_post_id ,'post_name' => $slug));
+				}
 			}
 		}
 		self::$copying_post = false;
@@ -242,9 +246,25 @@ class Lingotek_Model {
 		$cp_term = (array) $term;
 		//unset($cp_term['term_id']);
 
-		if (isset($cp_term['slug']) && term_exists($cp_term['slug'])) {
-			$cp_term['slug'] .= '-' . $cp_lang->slug;
+		if (class_exists('PLL_Share_Term_Slug', true)) {
+			remove_action( 'create_term', array( PLL()->filters_term, 'save_term' ), 999, 3 );
+			remove_action( 'edit_term', array( PLL()->filters_term, 'save_term' ), 999, 3 );
+			remove_action( 'pre_post_update', array( PLL()->filters_term, 'pre_post_update' ));
+			remove_filter( 'pre_term_name', array( PLL()->filters_term, 'pre_term_name' ));
+			remove_filter( 'pre_term_slug', array( PLL()->filters_term, 'pre_term_slug' ), 10, 2);
+			add_action( 'pre_post_update', array( PLL()->share_term_slug, 'pre_post_update' ) );
+			add_filter( 'pre_term_name', array( PLL()->share_term_slug, 'pre_term_name' ) );
+			add_filter( 'pre_term_slug', array( PLL()->share_term_slug, 'pre_term_slug' ), 10, 2 );
+			add_action( 'create_term', array( PLL()->share_term_slug, 'save_term' ), 1, 3 );
+			add_action( 'edit_term', array( PLL()->share_term_slug, 'save_term' ), 1, 3 );
+			$_POST['term_lang_choice'] = $cp_lang->slug;
 		}
+		else {
+			if (isset($cp_term['slug']) && term_exists($cp_term['slug'])) {
+				$cp_term['slug'] .= '-' . $cp_lang->slug;
+			}
+		}
+
 		$new_term = wp_insert_term($cp_term['name'], $taxonomy, $cp_term);
 
 		if (!is_wp_error($new_term)) {

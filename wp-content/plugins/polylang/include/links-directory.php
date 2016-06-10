@@ -21,11 +21,9 @@ class PLL_Links_Directory extends PLL_Links_Permalinks {
 
 		if ( did_action( 'pll_init' ) ) {
 			$this->init();
-		}
-		else {
+		} else {
 			add_action( 'pll_init', array( &$this, 'init' ) );
 		}
-
 	}
 
 	/**
@@ -36,8 +34,7 @@ class PLL_Links_Directory extends PLL_Links_Permalinks {
 	public function init() {
 		if ( did_action( 'setup_theme' ) ) {
 			$this->add_permastruct();
-		}
-		else {
+		} else {
 			add_action( 'setup_theme', array( &$this, 'add_permastruct' ), 2 );
 		}
 
@@ -184,6 +181,21 @@ class PLL_Links_Directory extends PLL_Links_Permalinks {
 		foreach ( $rules as $key => $rule ) {
 			// Special case for translated post types and taxonomies to allow canonical redirection
 			if ( $this->options['force_lang'] && in_array( $filter, array_merge( $this->model->get_translated_post_types(), $this->model->get_translated_taxonomies() ) ) ) {
+
+				/**
+				 * Filters the rewrite rules to modify
+				 *
+				 * @since 1.9.1
+				 *
+				 * @param bool        $modify  whether to modify or not the rule, defaults to true
+				 * @param array       $rule    original rewrite rule
+				 * @param string      $filter  current set of rules being modified
+				 * @param string|bool $archive custom post post type archive name or false if it is not a cpt archive
+				 */
+				if ( ! apply_filters( 'pll_modify_rewrite_rule', true, array( $key => $rule ), $filter, false ) ) {
+					continue;
+				}
+
 				if ( isset( $slug ) ) {
 					$newrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
 						array( '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '[1]', '?' ),
@@ -200,7 +212,13 @@ class PLL_Links_Directory extends PLL_Links_Permalinks {
 			}
 
 			// Rewrite rules filtered by language
-			elseif ( in_array( $filter, $this->always_rewrite ) || in_array( $filter, $this->model->get_filtered_taxonomies() ) || ( $cpts && preg_match( $cpts, $rule ) && ! strpos( $rule, 'name=' ) ) || ( 'rewrite_rules_array' != $filter && $this->options['force_lang'] ) ) {
+			elseif ( in_array( $filter, $this->always_rewrite ) || in_array( $filter, $this->model->get_filtered_taxonomies() ) || ( $cpts && preg_match( $cpts, $rule, $matches ) && ! strpos( $rule, 'name=' ) ) || ( 'rewrite_rules_array' != $filter && $this->options['force_lang'] ) ) {
+
+				/** This filter is documented in include/links-directory.php */
+				if ( ! apply_filters( 'pll_modify_rewrite_rule', true, array( $key => $rule ), $filter, empty( $matches[1] ) ? false : $matches[1] ) ) {
+					continue;
+				}
+
 				if ( isset( $slug ) ) {
 					$newrules[ $slug . str_replace( $wp_rewrite->root, '', $key ) ] = str_replace(
 						array( '[8]', '[7]', '[6]', '[5]', '[4]', '[3]', '[2]', '[1]', '?' ),
