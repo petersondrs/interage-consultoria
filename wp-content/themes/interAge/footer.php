@@ -14,17 +14,30 @@ Template Name: Footer
                     <?php endwhile; ?>
                 </div>
                 <div class="footer-content">
-                    <div class="conte1">
+                    <div class="content1">
                         <?php $my_query = new WP_Query('p=426'); ?>
                         <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
                         <img src="<?php echo wp_get_attachment_url(get_post_thumbnail_id()); ?>" class="img-responsive" />
-                        <?php the_excerpt(); ?>
-                        <a href="<?php the_permalink(); ?>"><?php the_meta(); ?></a>
+                        <div>
+                            <?php the_excerpt(); ?>
+                            <a href="<?php the_permalink(); ?>"><?php the_meta(); ?></a>
+                        </div>
                     <?php endwhile; ?>
                     </div>
-                    <div class="conte2">Content 2</div>
+                    <div class="content2">
+                        <?php $my_query = new WP_Query('p=445'); ?>
+                        <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+                        <?php the_content(); ?>
+                    <?php endwhile; ?>
+                    </div>
+
                 </div>
-                <div class="copyright">&copy <span class="entry-date"><?php echo get_the_date(Y); ?></span> Consultoria em Gerontologia Ltda. Todos os Direitos Reservados.</div>
+                <div class="copyright">
+                    <?php $my_query = new WP_Query('p=450'); ?>
+                    <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+                    &copy <?php echo get_the_date(Y); ?> <?php the_content(); ?>
+                    <?php endwhile; ?>
+                </div>
             </div>
         </footer><!-- .site-footer -->
     </div><!-- .site-inner -->
