@@ -19,6 +19,22 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
+
+    <!-- JS Efeito Menu  -->
+    <script src="/wp-content/themes/interAge/assets/js/jquery.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery_002.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/isotope.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery_003.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery_004.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery_005.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery-easing-1.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/jquery-transit-modified.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/layerslider.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/layerslider_002.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/view.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/switcher.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/menu.js" type="text/javascript"></script>
+    <script src="/wp-content/themes/interAge/assets/js/custom.js" type="text/javascript"></script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -45,7 +61,7 @@
 
 				<?php if ( has_nav_menu( 'primary' ) || has_nav_menu( 'social' ) ) : ?>
 					<button id="menu-toggle" class="menu-toggle"><?php _e( 'Menu', 'twentysixteen' ); ?></button>
-
+<div class="menu-menu-container" id="navigation">
 					<div id="site-header-menu" class="site-header-menu">
 						<?php if ( has_nav_menu( 'primary' ) ) : ?>
 							<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
@@ -54,8 +70,13 @@
 										'theme_location' => 'primary',
 										'menu_class'     => 'primary-menu',
 									 ) );
+
+
 								?>
+                                <li style="left: 231px; width: 80px; overflow: hidden;" class="back"><div class="left"></div></li>
+                                </div>
 							</nav><!-- .main-navigation -->
+
 						<?php endif; ?>
 
 						<?php if ( has_nav_menu( 'social' ) ) : ?>
