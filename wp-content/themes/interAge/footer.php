@@ -8,7 +8,7 @@ Template Name: Footer
         <footer id="colophon" class="site-footer" role="contentinfo">
             <div class="footer-aling">
                 <div class="title">
-                    <?php $my_query = new WP_Query('p=419'); ?>
+                    <?php $my_query = new WP_Query('p=426'); ?>
                         <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
                         <h1 class="footer-title"><?php the_title(); ?></h1>
                     <?php endwhile; ?>
