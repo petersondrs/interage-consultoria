@@ -432,3 +432,5 @@ $excerpt = implode(" ",$excerpt);
 $excerpt = preg_replace('`\[[^\]]*\]`','',$excerpt);
 return $excerpt;
 }
+
+

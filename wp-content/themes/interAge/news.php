@@ -12,6 +12,8 @@ Template Name: News
                 <a href="<?php the_permalink(); ?>" name="Conheça o projeto <?php the_title(); ?>"><?php echo excerpt('20'); ?></a>
         </article>
     <?php endwhile; ?>
+
+    <?php echo do_shortcode("[huge_it_share]"); ?>
 </section>
 
 <?php get_footer(); ?>
