@@ -1441,6 +1441,18 @@ function the_archive_title( $before = '', $after = '' ) {
 	}
 }
 
+add_filter( 'get_the_archive_title', function ( $title ) {
+
+    if( is_category() ) {
+
+        $title = single_cat_title( '', false );
+
+    }
+
+    return $title;
+
+});
+
 /**
  * Retrieve the archive title based on the queried object.
  *
@@ -3577,3 +3589,5 @@ function wp_heartbeat_settings( $settings ) {
 
 	return $settings;
 }
+
+
